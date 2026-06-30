@@ -8,6 +8,8 @@ from app.models.produto import Produto
 class ProdutoRepository:
 
     def listar_todos(self) -> list[Produto]:
+        # TODO: paginar isso. Por enquanto traz tudo, o que vai doer se a base
+        # crescer. Fica pra depois.
         stmt = db.select(Produto).order_by(Produto.id)
         return list(db.session.scalars(stmt).all())
 

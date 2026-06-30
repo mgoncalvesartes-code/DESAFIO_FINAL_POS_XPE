@@ -47,6 +47,8 @@ def criar():
 
 @produto_bp.put("/<int:produto_id>")
 def atualizar(produto_id: int):
+    # uso PUT mas deixo mandar só os campos que mudaram (parcial=True). Sei que
+    # isso é mais cara de PATCH, mas pra esse caso achei exagero ter os dois.
     dados = validar_payload(request.get_json(silent=True) or {}, parcial=True)
     produto = service.atualizar(produto_id, dados)
     return jsonify(serializar_produto(produto)), 200
