@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Ambiente virtual
+venv/
+.venv/
+env/
+
+# Banco SQLite (persistência local) e logs
+instance/*.db
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
