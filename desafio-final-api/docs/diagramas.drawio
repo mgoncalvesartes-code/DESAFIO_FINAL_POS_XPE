@@ -1,0 +1,128 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram name="C4 - Container" id="c4-container">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title1" value="C4 - Nivel 2: Container (API REST Produtos)" style="text;html=1;fontSize=16;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="parceiro" value="Integrador do parceiro&#10;[Sistema externo]&#10;&#10;Le o catalogo de Produto&#10;via HTTP/JSON (so GET)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073B6F;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="API REST de Produtos&#10;[Container: Python + Flask]&#10;&#10;Expoe endpoints CRUD + Count,&#10;Find All, Find By Id, Find By Name&#10;no padrao MVC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;fontColor=#ffffff;strokeColor=#0B4884;" vertex="1" parent="1">
+          <mxGeometry x="80" y="260" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="SQLite&#10;(instance/produtos.db)&#10;&#10;Guarda os produtos" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#1168BD;fontColor=#ffffff;strokeColor=#0B4884;" vertex="1" parent="1">
+          <mxGeometry x="400" y="270" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="Requisicoes HTTP/JSON (REST)" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="parceiro" target="api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Le/Escreve [SQL via SQLAlchemy ORM]" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="api" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="C4 - Component" id="c4-component">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" value="C4 - Nivel 3: Component (interior da API - camadas MVC)" style="text;html=1;fontSize=16;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ctrl" value="Controller&#10;(produto_controller.py)&#10;&#10;Blueprint Flask: mapeia rotas HTTP&#10;para casos de uso. Extrai dados da&#10;requisicao e formata a resposta." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="view" value="Schema / View&#10;(produto_schema.py)&#10;&#10;Serializa Model -&gt; JSON e&#10;valida/desserializa JSON -&gt; dados.&#10;A 'View' de uma API REST." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;" vertex="1" parent="1">
+          <mxGeometry x="380" y="80" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" value="Service&#10;(produto_service.py)&#10;&#10;Regras de negocio e orquestracao&#10;dos casos de uso. Nao conhece HTTP&#10;nem SQL." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="240" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="repo" value="Repository&#10;(produto_repository.py)&#10;&#10;Acesso a dados. Unica camada que&#10;fala com o ORM (SQLAlchemy)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="400" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="model" value="Model&#10;(produto.py)&#10;&#10;Entidade de dominio Produto +&#10;mapeamento ORM (tabela 'produtos')." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5D82A8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="550" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dbc" value="SQLite&#10;[Banco de Dados]" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#1168BD;fontColor=#ffffff;strokeColor=#0B4884;" vertex="1" parent="1">
+          <mxGeometry x="400" y="555" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="usa" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="ctrl" target="svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="serializa/valida" style="endArrow=block;html=1;fontSize=11;dashed=1;" edge="1" parent="1" source="ctrl" target="view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="usa" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="svc" target="repo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="manipula" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="repo" target="model">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="persiste [SQL]" style="endArrow=block;html=1;fontSize=11;" edge="1" parent="1" source="repo" target="dbc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="UML - Classes" id="uml-classes">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" value="Diagrama de Classes (UML)" style="text;html=1;fontSize=16;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uctrl" value="ProdutoController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="uctrl_m" value="+ listar_todos()&#10;+ buscar_por_id(id)&#10;+ buscar_por_nome(nome)&#10;+ contar()&#10;+ criar()&#10;+ atualizar(id)&#10;+ deletar(id)" style="text;align=left;verticalAlign=top;spacingLeft=6;html=1;" vertex="1" parent="uctrl">
+          <mxGeometry y="26" width="240" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="usvc" value="ProdutoService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="360" y="70" width="250" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="usvc_m" value="+ listar_todos(): List&#10;+ buscar_por_id(id): Produto&#10;+ buscar_por_nome(nome): List&#10;+ contar(): int&#10;+ criar(dados): Produto&#10;+ atualizar(id, dados): Produto&#10;+ deletar(id): None" style="text;align=left;verticalAlign=top;spacingLeft=6;html=1;" vertex="1" parent="usvc">
+          <mxGeometry y="26" width="250" height="144" as="geometry" />
+        </mxCell>
+        <mxCell id="urepo" value="ProdutoRepository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="360" y="300" width="250" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="urepo_m" value="+ listar_todos(): List&#10;+ buscar_por_id(id): Produto?&#10;+ buscar_por_nome(nome): List&#10;+ contar(): int&#10;+ salvar(produto): Produto&#10;+ deletar(produto): None" style="text;align=left;verticalAlign=top;spacingLeft=6;html=1;" vertex="1" parent="urepo">
+          <mxGeometry y="26" width="250" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="umodel" value="Produto" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="umodel_a" value="- id: int&#10;- nome: str&#10;- descricao: str&#10;- preco: Decimal&#10;- quantidade_estoque: int&#10;- data_criacao: datetime" style="text;align=left;verticalAlign=top;spacingLeft=6;html=1;" vertex="1" parent="umodel">
+          <mxGeometry y="26" width="240" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="uschema" value="ProdutoSchema (View)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="240" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="uschema_m" value="+ serializar_produto(p): dict&#10;+ serializar_lista(ps): list&#10;+ validar_payload(dados): dict" style="text;align=left;verticalAlign=top;spacingLeft=6;html=1;" vertex="1" parent="uschema">
+          <mxGeometry y="26" width="240" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" value="usa" style="endArrow=open;html=1;endFill=0;fontSize=11;" edge="1" parent="1" source="uctrl" target="usvc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="usa" style="endArrow=open;html=1;endFill=0;fontSize=11;" edge="1" parent="1" source="usvc" target="urepo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="manipula" style="endArrow=open;html=1;endFill=0;fontSize=11;" edge="1" parent="1" source="urepo" target="umodel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" value="serializa" style="endArrow=open;html=1;endFill=0;fontSize=11;dashed=1;" edge="1" parent="1" source="uschema" target="umodel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" value="usa" style="endArrow=open;html=1;endFill=0;fontSize=11;dashed=1;" edge="1" parent="1" source="uctrl" target="uschema">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
