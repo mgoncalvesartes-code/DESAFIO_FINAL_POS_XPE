@@ -5,12 +5,12 @@ está.
 
 ## Visão geral
 
-É um MVC clássico, mas separei mais duas camadas que pra mim fazem diferença num
-back-end: **Service** (regra de negócio) e **Repository** (acesso a dados). MVC
-"puro" tende a empilhar tudo no Controller; quebrar assim mantém cada arquivo
+É um MVC clássico, mas separei mais duas camadas que, para mim, fazem diferença no
+back-end: **Service** (regra de negócio) e **Repository** (acesso a dados), enquanto o MVC
+"puro" tende a empilhar tudo no Controller. Acredito que quebrar assim mantém cada arquivo
 com um trabalho só.
 
-O caminho de uma requisição é mais ou menos esse:
+O caminho de uma requisição é o seguinte:
 
 ```
 HTTP → Controller → Service → Repository → Model → Banco (SQLite)
@@ -18,7 +18,7 @@ HTTP → Controller → Service → Repository → Model → Banco (SQLite)
 ```
 
 A regra que tentei seguir: cada camada só conversa com a de baixo. Na prática
-isso me dá liberdade de mexer numa sem quebrar as outras — trocar o banco é só
+isso dá liberdade de mexer em uma sem quebrar as outras. Trocar o banco é só
 no Repository, mudar a regra é só no Service, e o formato do JSON é só no Schema.
 
 ---
