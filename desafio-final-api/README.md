@@ -4,7 +4,7 @@ Minha entrega do desafio final do bootcamp de Arquiteto de Software (Faculdade X
 
 É uma API de **Produto** em Flask, organizada no padrão MVC, com os dados num
 SQLite. A ideia do enunciado era expor um catálogo pra parceiros consumirem via
-REST — escolhi Produto justamente por ser o tipo de dado que dá pra abrir pro
+REST. Diante disso, escolhi "Produto" por ser o tipo de dado que dá pra abrir para o
 público sem vazar nada sensível de cliente.
 
 Stack: Python 3.10+, Flask 3, Flask-SQLAlchemy, SQLite.
@@ -40,7 +40,7 @@ A raiz (`GET /`) devolve um JSON com a lista de rotas, só pra facilitar quando
 abro a API no navegador.
 
 Uma decisão que tomei: o **Find By Name** não faz igualdade exata, faz "contém"
-e ignora maiúscula/minúscula. Achei mais útil — quem busca "mouse" quer achar
+e ignora maiúscula/minúscula. Dessa forma, quem busca "mouse" quer achar
 "Mouse sem fio" também.
 
 ---
@@ -73,7 +73,7 @@ python -m pytest tests/test_api.py -v      # ou: python tests/test_api.py
 ```
 
 São 10 testes em cima dos endpoints (CRUD, count, busca por nome, e os casos de
-erro 400/404), rodando num SQLite em memória pra não sujar o banco de verdade.
+erro 400/404), rodando num SQLite em memória pra não poluir o banco de verdade.
 
 Obs.: precisa de Python 3.10+ — uso anotação `X | None` em alguns lugares.
 
