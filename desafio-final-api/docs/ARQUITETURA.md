@@ -75,40 +75,38 @@ desafio-final-api/
 **Model** (`app/models/produto.py`) — o "M". É só a entidade `Produto` mapeada
 pra tabela. Sem regra de negócio, sem HTTP, só os campos.
 
-**Schema / View** (`app/schemas/produto_schema.py`) — esse é o "V", que numa API
-acaba sendo o JSON e não uma tela. Faz as duas pontas: serializa o Model na saída
-e valida o que chega na entrada (e reclama quando o dado vem errado).
+**Schema / View** (`app/schemas/produto_schema.py`) — o "V" (que numa API
+acaba sendo o JSON). Faz as duas pontas: serializa o Model na saída
+e valida o que chega na entrada (alertando quando o dado vem errado).
 
 **Controller** (`app/controllers/produto_controller.py`) — o "C". São as rotas
 (Blueprint do Flask). Ele lê a requisição, chama o Schema pra validar, chama o
-Service e devolve o status certo. De propósito não tem regra nem SQL aqui.
+Service e devolve o status certo. De propósito, não tem regra nem SQL aqui.
 
 **Service** (`app/services/produto_service.py`) — onde fica a regra de negócio.
 Por exemplo, é ele que decide lançar "não encontrado" quando o id não existe.
-Não sabe o que é HTTP nem SQL, só coordena.
 
-**Repository** (`app/repositories/produto_repository.py`) — o único que encosta
-no SQLAlchemy. Foi aqui que centralizei o acesso ao banco justamente pra poder
+**Repository** (`app/repositories/produto_repository.py`) — o único que tangencia
+no SQLAlchemy. Centralizei o acesso ao banco justamente para poder
 trocar de SGBD depois sem espalhar mudança pelo resto.
 
-**Errors** (`app/errors/`) — minhas exceções (`RecursoNaoEncontradoError`,
+**Errors** (`app/errors/`) — exceções (`RecursoNaoEncontradoError`,
 `ValidacaoError`) e os handlers que as transformam em JSON com o status certo
 (400/404/405/500). Fiz assim pra não ter `try/except` repetido em todo Controller.
 
 **create_app** (`app/__init__.py`) — a fábrica que monta tudo: config, banco,
-Blueprints e handlers. O bônus de usar fábrica é que nos testes eu subo uma
-instância separada com banco em memória.
+Blueprints e handlers. Nos testes eu subo uma instância separada com banco em memória.
 
 ## Por que algumas escolhas
 
-- **Service e Repository separados:** poderia ter jogado tudo no Controller, mas
-  aí ele vira um monstro. Separado, cada coisa fica testável e no seu canto.
+- **Service e Repository separados:** poderia ter colocado tudo no Controller, mas
+  aí ele ficaria muito grande. Separado, cada coisa fica testável e no seu canto.
 - **Schema fazendo o papel de View:** numa API REST não tem tela, então faz
   sentido o "V" ser a camada que cuida do JSON (entrada e saída).
 - **Injeção de dependência no Service:** o `ProdutoService` aceita receber um
   repository no construtor, o que ajuda a mockar nos testes.
-- **SQLite:** escolhi por não precisar instalar nada — sobe junto com a app. Dá
-  pra trocar por Postgres só apontando a `DATABASE_URL`.
+- **SQLite:** escolhi por não precisar instalar nada — sobe junto com a app. Sendo possível
+  trocar por Postgres só apontando a `DATABASE_URL`.
 
 ---
 
@@ -116,14 +114,14 @@ instância separada com banco em memória.
 
 Deixei em dois formatos:
 
-- **Editável:** [`diagramas.drawio`](diagramas.drawio) — abra em
+- **Editável:** [`diagramas.drawio`](diagramas.drawio): abrir em
   <https://app.diagrams.net>. Contém as três visões abaixo.
 - **Renderizado (Mermaid):** incorporado a seguir, renderiza direto no GitHub
   ou em <https://mermaid.live>.
 
 ### C4 — Container
 
-Separei os dois tipos de quem usa a API: o parceiro de fora, que só lê o
+Separei os dois tipos de quem usa a API: o pessoal de fora, que só lê o
 catálogo, e o pessoal interno, que cadastra/edita. Os dois batem na mesma API,
 mas com verbos diferentes.
 
@@ -139,7 +137,7 @@ flowchart TB
 ```
 
 > Hoje a API não diferencia quem lê de quem escreve (não tem auth). Num cenário
-> real eu colocaria pelo menos uma chave de API pro parceiro. Fica como melhoria.
+> real eu colocaria pelo menos uma chave de API para o parceiro.
 
 ### C4 — Component (dentro da API)
 
